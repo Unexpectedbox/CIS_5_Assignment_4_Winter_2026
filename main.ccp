@@ -10,87 +10,89 @@ using std::fixed;
 using std::setprecision;
 
 
-// Function declarations
-int calculateSum(const int arr[], int size);         // const pointer
-double getAverage(int sum, int size);                // pass by value
-void addBonus(int arr[], int size, int bonus = 5);   // modifies original array
-int findHighest(const int* arr, int size);           // pointer
-int countPassed(const int arr[], int size);          // const pointer (>= 70)
-
+int calculateSum(const int scores[], int size);
+double calculateAverage(int sum, int size);
+void addBonus(int scores[], int size, int bonus);
+int findMinimum(const int* scores, int size);
+int countHighPerformers(const int scores[], int size);
 
 int main() {
-
-    const int SIZE = 5;
-    int scores[SIZE] = { 65, 82, 90, 45, 78 };
+   
+    const int SIZE = 10;
+    int ary[SIZE] = { 75, 88, 62, 95, 50, 82, 70, 91, 45, 78 };
 
     // OG Scores
     cout << "Original scores:\n";
     for (int i = 0; i < SIZE; i++) {
-        cout << scores[i] << " ";
+        cout << ary[i] << " ";
     }
     cout << endl;
 
-    // Sum and Average of Scores
-    int sum = calculateSum(scores, SIZE);
-    double average = getAverage(sum, SIZE);
+    // Calculate sum and average
+    int sum = calculateSum(ary, SIZE);
+    double avg = calculateAverage(sum, SIZE);
 
     cout << "\nSum: " << sum << endl;
     cout << fixed << setprecision(2);
-    cout << "Average: " << average << endl;
+    cout << "Average: " << avg << endl;
 
-    // Bonus Points
-    addBonus(scores, SIZE);
+    // Add bonus points
+    addBonus(ary, SIZE, 10);
 
-
+    // Updated scores
     cout << "\nScores after bonus:\n";
     for (int i = 0; i < SIZE; i++) {
-        cout << scores[i] << " ";
+        cout << ary[i] << " ";
     }
     cout << endl;
 
-    cout << "\nHighest score: " << findHighest(scores, SIZE) << endl;
-    cout << "Number of students passed: " << countPassed(scores, SIZE) << endl;
+    // Find minimum score
+    cout << "\nMinimum score: " << findMinimum(ary, SIZE) << endl;
+
+    // Count high performers
+    cout << "High performers: "
+        << countHighPerformers(ary, SIZE) << endl;
 
     return 0;
 }
 
-//Sum
-int calculateSum(const int arr[], int size) {
+// Calculates sum 
+int calculateSum(const int scores[], int size) {
     int total = 0;
     for (int i = 0; i < size; i++) {
-        total += arr[i];
+        total += scores[i];
     }
     return total;
 }
 
-// Average
-double getAverage(int sum, int size) {
+// Calculates average score
+double calculateAverage(int sum, int size) {
     return sum / double(size);
 }
 
-// Bouns Points
-void addBonus(int arr[], int size, int bonus) {
+// Adds bonus points 
+void addBonus(int scores[], int size, int bonus) {
     for (int i = 0; i < size; i++) {
-        arr[i] += bonus;
+        scores[i] += bonus;
     }
 }
 
-// Highest Score
-int findHighest(const int* arr, int size) {
-    int highest = arr[0];
+// Finds the minimum score
+int findMinimum(const int* scores, int size) {
+    int min = scores[0];
     for (int i = 1; i < size; i++) {
-        if (arr[i] > highest) {
-            highest = arr[i];
+        if (scores[i] < min) {
+            min = scores[i];
         }
     }
-    return highest;
+    return min;
 }
 
-// Passed
-int countPassed(const int arr[], int size) {
+// Passing
+int countHighPerformers(const int scores[], int size) {
     int count = 0;
     for (int i = 0; i < size; i++) {
-        if (arr[i] >= 70) {
+        if (scores[i] >= 80) {
             count++;
         }
     }
